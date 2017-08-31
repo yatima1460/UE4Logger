@@ -8,7 +8,29 @@ UUE4LoggerBPLibrary::UUE4LoggerBPLibrary(const FObjectInitializer& ObjectInitial
 
 }
 
+//utility functions
 
+void UUE4LoggerBPLibrary::LogInfo(UObject * WorldContextObject, FString InString, bool bPrintToLog, bool bPrintToScreen, float Duration)
+{
+	UUE4LoggerBPLibrary::Log(WorldContextObject, InString, ELogLevel::Info, bPrintToLog, bPrintToScreen, Duration);
+}
+
+void UUE4LoggerBPLibrary::LogWarning(UObject * WorldContextObject, FString InString, bool bPrintToLog, bool bPrintToScreen, float Duration)
+{
+	UUE4LoggerBPLibrary::Log(WorldContextObject, InString, ELogLevel::Warning, bPrintToLog, bPrintToScreen, Duration);
+}
+
+void UUE4LoggerBPLibrary::LogError(UObject * WorldContextObject, FString InString, bool bPrintToLog, bool bPrintToScreen, float Duration)
+{
+	UUE4LoggerBPLibrary::Log(WorldContextObject, InString, ELogLevel::Error, bPrintToLog, bPrintToScreen, Duration);
+}
+
+void UUE4LoggerBPLibrary::CrashEngine(UObject * WorldContextObject, FString Message)
+{
+	UUE4LoggerBPLibrary::Log(WorldContextObject, Message, ELogLevel::Fatal, true, false, 0.0f);
+}
+
+//general function
 
 void UUE4LoggerBPLibrary::Log(UObject* WorldContextObject, FString InString, ELogLevel eLogLevel, bool bPrintToLog, bool bPrintToScreen, float Duration)
 {
@@ -24,8 +46,6 @@ void UUE4LoggerBPLibrary::Log(UObject* WorldContextObject, FString InString, ELo
 		logColor = FColor::Red;
 		break;
 	}
-
-
 
 	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::ReturnNull);
 	FString Prefix;
@@ -104,18 +124,6 @@ void UUE4LoggerBPLibrary::Log(UObject* WorldContextObject, FString InString, ELo
 	}
 }
 
-void UUE4LoggerBPLibrary::CrashEngine(UObject * WorldContextObject, FString Message)
-{
-	UUE4LoggerBPLibrary::Log(WorldContextObject, Message, ELogLevel::Fatal, true, false, 0.0f);
-}
-//
-//void UUE4LoggerBPLibrary::SetLogLevel(ELogLevel eLogLevel)
-//{
-//}
-//
-//ELogLevel UUE4LoggerBPLibrary::GetLogLevel()
-//{
-//	return ELogLevel();
-//}
+
 
 

@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "0.1",
+	"VersionName": "0.2",
 	"FriendlyName": "Advanced Logging",
 	"Description": "A plugin to add blueprint nodes for a better logging",
 	"Category": "Blueprint",

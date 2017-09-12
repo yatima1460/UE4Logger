@@ -6,6 +6,7 @@
 #include "Engine/Console.h"
 #include "Engine/LocalPlayer.h"
 #include "Runtime/Core/Public/Logging/LogVerbosity.h"
+#include <LogMacros.h>
 #include "UE4LoggerBPLibrary.generated.h"
 
 
@@ -27,13 +28,13 @@
 *	https://wiki.unrealengine.com/Custom_Blueprint_Node_Creation
 */
 
-UENUM(BlueprintType)
+UENUM(BlueprintType, meta = (Keywords = "UE4logger log level", CompactNodeTitle = "Log Level"))
 enum ELogLevel
 {
-	Info,
-	Warning,
-	Error,
-	Fatal
+	Fatal = 1,
+	Error = 2,
+	Warning = 3,
+	Info = 5
 };
 
 UCLASS()
@@ -41,18 +42,33 @@ class UUE4LoggerBPLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_UCLASS_BODY()
 
-	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject", CallableWithoutWorldContext, DisplayName = "Log Info", Keywords = "UE4Logger log info"), Category = "UE4Logger")
+#pragma region verbosity
+	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject", CallableWithoutWorldContext, DisplayName = "Set Log Level", Keywords = "UE4Logger log set verbosity level"), Category = "UE4-Logger|Log Level")
+	static void SetLogLevel(UObject * WorldContextObject, ELogLevel eLogLevel = ELogLevel::Error);
+
+	UFUNCTION(BlueprintPure, meta = (WorldContext = "WorldContextObject", CallableWithoutWorldContext, DisplayName = "Get Log Level", Keywords = "UE4Logger log get verbosity level"), Category = "UE4-Logger|Log Level")
+	static ELogLevel GetLogLevel(UObject * WorldContextObject);
+
+	UFUNCTION(BlueprintPure, meta = (WorldContext = "WorldContextObject", CallableWithoutWorldContext, DisplayName = "Is Log Level Suppressed", Keywords = "UE4Logger log is suppressed verbosity level"), Category = "UE4-Logger|Log Level")
+	static bool IsLogLevelSuppressed(UObject * WorldContextObject, ELogLevel eLogLevel = ELogLevel::Info);
+#pragma endregion
+
+#pragma region utility functions
+	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject", CallableWithoutWorldContext, DisplayName = "Log Info", Keywords = "UE4Logger log info print", AdvancedDisplay = "2"), Category = "UE4-Logger")
 	static void LogInfo(UObject* WorldContextObject, FString InString = "Hello", bool bPrintToLog = true, bool bPrintToScreen = true, float Duration = 2.0f);
 
-	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject", CallableWithoutWorldContext, DisplayName = "Log Warning", Keywords = "UE4Logger log warning"), Category = "UE4Logger")
+	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject", CallableWithoutWorldContext, DisplayName = "Log Warning", Keywords = "UE4Logger log warning print", AdvancedDisplay = "2"), Category = "UE4-Logger")
 	static void LogWarning(UObject* WorldContextObject, FString InString = "Hello", bool bPrintToLog = true, bool bPrintToScreen = true, float Duration = 2.0f);
 
-	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject", CallableWithoutWorldContext, DisplayName = "Log Error", Keywords = "UE4Logger log error"), Category = "UE4Logger")
+	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject", CallableWithoutWorldContext, DisplayName = "Log Error", Keywords = "UE4Logger log error print", AdvancedDisplay = "2"), Category = "UE4-Logger")
 	static void LogError(UObject* WorldContextObject, FString InString = "Hello", bool bPrintToLog = true, bool bPrintToScreen = true, float Duration = 2.0f);
 
-	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject", CallableWithoutWorldContext, DisplayName = "Log Fatal (Crash Engine)", Keywords = "UE4Logger log fatal crash engine"), Category = "UE4Logger|Advanced")
+	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject", CallableWithoutWorldContext, DisplayName = "Log Fatal (Crash Engine)", Keywords = "UE4Logger log fatal crash engine print", AdvancedDisplay = "2"), Category = "UE4-Logger|Advanced")
 	static void CrashEngine(UObject* WorldContextObject, FString Message = "Fatal Error");
+#pragma endregion
 
-	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject", CallableWithoutWorldContext, DisplayName = "Log", Keywords = "UE4Logger log print string"), Category = "UE4Logger")
+#pragma region generic function
+	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject", CallableWithoutWorldContext, DisplayName = "Log", Keywords = "UE4Logger log print string", AdvancedDisplay = "3"), Category = "UE4-Logger")
 	static void Log(UObject* WorldContextObject, FString InString = "Hello", ELogLevel eLogLevel = ELogLevel::Info, bool bPrintToLog = true, bool bPrintToScreen = true, float Duration = 2.0f);
+#pragma endregion
 };

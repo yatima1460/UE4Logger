@@ -8,8 +8,24 @@ UUE4LoggerBPLibrary::UUE4LoggerBPLibrary(const FObjectInitializer& ObjectInitial
 
 }
 
-//utility functions
+#pragma region verbosity
+void UUE4LoggerBPLibrary::SetLogLevel(UObject * WorldContextObject, ELogLevel eLogLevel)
+{
+	LogBlueprintUserMessages.SetVerbosity((ELogVerbosity::Type)eLogLevel);
+}
 
+ELogLevel UUE4LoggerBPLibrary::GetLogLevel(UObject * WorldContextObject)
+{
+	return (ELogLevel)LogBlueprintUserMessages.GetVerbosity();
+}
+
+bool UUE4LoggerBPLibrary::IsLogLevelSuppressed(UObject * WorldContextObject, ELogLevel eLogLevel)
+{
+	return LogBlueprintUserMessages.IsSuppressed((ELogVerbosity::Type)eLogLevel);
+}
+#pragma endregion
+
+#pragma region utility functions
 void UUE4LoggerBPLibrary::LogInfo(UObject * WorldContextObject, FString InString, bool bPrintToLog, bool bPrintToScreen, float Duration)
 {
 	UUE4LoggerBPLibrary::Log(WorldContextObject, InString, ELogLevel::Info, bPrintToLog, bPrintToScreen, Duration);
@@ -29,13 +45,12 @@ void UUE4LoggerBPLibrary::CrashEngine(UObject * WorldContextObject, FString Mess
 {
 	UUE4LoggerBPLibrary::Log(WorldContextObject, Message, ELogLevel::Fatal, true, false, 0.0f);
 }
+#pragma endregion
 
-//general function
-
+#pragma region generic function
 void UUE4LoggerBPLibrary::Log(UObject* WorldContextObject, FString InString, ELogLevel eLogLevel, bool bPrintToLog, bool bPrintToScreen, float Duration)
 {
 	FColor logColor = FColor::White;
-
 	switch (eLogLevel)
 	{
 	case ELogLevel::Warning:
@@ -80,7 +95,6 @@ void UUE4LoggerBPLibrary::Log(UObject* WorldContextObject, FString InString, ELo
 
 	if (bPrintToLog)
 	{
-
 		//can't find a better way of doing this without using a switch because of a strange compiler error
 		switch (eLogLevel)
 		{
@@ -106,8 +120,8 @@ void UUE4LoggerBPLibrary::Log(UObject* WorldContextObject, FString InString, ELo
 		}
 	}
 
-	// Also output to the screen, if possible
-	if (bPrintToScreen)
+	// Also output to the screen if possible and hide suppressed log levels
+	if (bPrintToScreen && !LogBlueprintUserMessages.IsSuppressed((ELogVerbosity::Type)eLogLevel))
 	{
 		if (GAreScreenMessagesEnabled)
 		{
@@ -122,8 +136,9 @@ void UUE4LoggerBPLibrary::Log(UObject* WorldContextObject, FString InString, ELo
 			UE_LOG(LogBlueprint, Warning, TEXT("Screen messages disabled (!GAreScreenMessagesEnabled).  Cannot print to screen."));
 		}
 	}
-}
 
+}
+#pragma endregion
 
 
 

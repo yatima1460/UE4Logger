@@ -17,7 +17,16 @@
 		{
 			"Name": "UE4Logger",
 			"Type": "Runtime",
-			"LoadingPhase": "PreLoadingScreen"
+			"LoadingPhase": "PreLoadingScreen",
+			"WhitelistPlatforms" :
+			[
+				"Win64",
+				"Win32",
+				"Linux",
+				"Mac",
+				"Android",
+				"IOS"
+			]
 		}
 	]
 }

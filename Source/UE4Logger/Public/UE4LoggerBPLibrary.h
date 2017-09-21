@@ -31,6 +31,7 @@
 UENUM(BlueprintType, meta = (Keywords = "UE4logger log level", CompactNodeTitle = "Log Level"))
 enum ELogLevel
 {
+	None = 0,
 	Fatal = 1,
 	Error = 2,
 	Warning = 3,

@@ -11,17 +11,27 @@ UUE4LoggerBPLibrary::UUE4LoggerBPLibrary(const FObjectInitializer& ObjectInitial
 #pragma region verbosity
 void UUE4LoggerBPLibrary::SetLogLevel(UObject * WorldContextObject, ELogLevel eLogLevel)
 {
+#if !UE_BUILD_SHIPPING
 	LogBlueprintUserMessages.SetVerbosity((ELogVerbosity::Type)eLogLevel);
+#endif
 }
 
 ELogLevel UUE4LoggerBPLibrary::GetLogLevel(UObject * WorldContextObject)
 {
+#if !UE_BUILD_SHIPPING
 	return (ELogLevel)LogBlueprintUserMessages.GetVerbosity();
+#else
+	return ELogLevel::None;
+#endif
 }
 
 bool UUE4LoggerBPLibrary::IsLogLevelSuppressed(UObject * WorldContextObject, ELogLevel eLogLevel)
 {
+#if !UE_BUILD_SHIPPING
 	return LogBlueprintUserMessages.IsSuppressed((ELogVerbosity::Type)eLogLevel);
+#else
+	return true;
+#endif
 }
 #pragma endregion
 
@@ -120,6 +130,7 @@ void UUE4LoggerBPLibrary::Log(UObject* WorldContextObject, FString InString, ELo
 		}
 	}
 
+#if !UE_BUILD_SHIPPING
 	// Also output to the screen if possible and hide suppressed log levels
 	if (bPrintToScreen && !LogBlueprintUserMessages.IsSuppressed((ELogVerbosity::Type)eLogLevel))
 	{
@@ -136,7 +147,7 @@ void UUE4LoggerBPLibrary::Log(UObject* WorldContextObject, FString InString, ELo
 			UE_LOG(LogBlueprint, Warning, TEXT("Screen messages disabled (!GAreScreenMessagesEnabled).  Cannot print to screen."));
 		}
 	}
-
+#endif
 }
 #pragma endregion
 

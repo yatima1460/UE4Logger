@@ -11,14 +11,14 @@ UUE4LoggerBPLibrary::UUE4LoggerBPLibrary(const FObjectInitializer& ObjectInitial
 #pragma region verbosity
 void UUE4LoggerBPLibrary::SetLogLevel(UObject * WorldContextObject, ELogLevel eLogLevel)
 {
-#if !UE_BUILD_SHIPPING
+#if !NO_LOGGING
 	LogBlueprintUserMessages.SetVerbosity((ELogVerbosity::Type)eLogLevel);
 #endif
 }
 
 ELogLevel UUE4LoggerBPLibrary::GetLogLevel(UObject * WorldContextObject)
 {
-#if !UE_BUILD_SHIPPING
+#if !NO_LOGGING
 	return (ELogLevel)LogBlueprintUserMessages.GetVerbosity();
 #else
 	return ELogLevel::None;
@@ -27,7 +27,7 @@ ELogLevel UUE4LoggerBPLibrary::GetLogLevel(UObject * WorldContextObject)
 
 bool UUE4LoggerBPLibrary::IsLogLevelSuppressed(UObject * WorldContextObject, ELogLevel eLogLevel)
 {
-#if !UE_BUILD_SHIPPING
+#if !NO_LOGGING
 	return LogBlueprintUserMessages.IsSuppressed((ELogVerbosity::Type)eLogLevel);
 #else
 	return true;
@@ -51,7 +51,7 @@ void UUE4LoggerBPLibrary::LogError(UObject * WorldContextObject, FString InStrin
 	UUE4LoggerBPLibrary::Log(WorldContextObject, InString, ELogLevel::Error, bPrintToLog, bPrintToScreen, Duration);
 }
 
-void UUE4LoggerBPLibrary::CrashEngine(UObject * WorldContextObject, FString Message)
+void UUE4LoggerBPLibrary::LogFatal(UObject * WorldContextObject, FString Message)
 {
 	UUE4LoggerBPLibrary::Log(WorldContextObject, Message, ELogLevel::Fatal, true, false, 0.0f);
 }
@@ -60,6 +60,7 @@ void UUE4LoggerBPLibrary::CrashEngine(UObject * WorldContextObject, FString Mess
 #pragma region generic function
 void UUE4LoggerBPLibrary::Log(UObject* WorldContextObject, FString InString, ELogLevel eLogLevel, bool bPrintToLog, bool bPrintToScreen, float Duration)
 {
+#if !NO_LOGGING
 	FColor logColor = FColor::White;
 	switch (eLogLevel)
 	{
@@ -130,7 +131,7 @@ void UUE4LoggerBPLibrary::Log(UObject* WorldContextObject, FString InString, ELo
 		}
 	}
 
-#if !UE_BUILD_SHIPPING
+
 	// Also output to the screen if possible and hide suppressed log levels
 	if (bPrintToScreen && !LogBlueprintUserMessages.IsSuppressed((ELogVerbosity::Type)eLogLevel))
 	{

@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
-	"Version": 3,
-	"VersionName": "0.3",
+	"Version": 4,
+	"VersionName": "0.4",
 	"FriendlyName": "UE4-Logger - Advanced Logging",
 	"Description": "A plugin to add blueprint nodes for a better logging",
 	"Category": "Blueprint",

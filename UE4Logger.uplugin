@@ -1,15 +1,15 @@
 {
 	"FileVersion": 3,
-	"Version": 4,
-	"VersionName": "0.4",
-	"FriendlyName": "UE4-Logger - Advanced Logging",
+	"Version": 5,
+	"VersionName": "0.5",
+	"FriendlyName": "UE4Logger - Advanced Logging",
 	"Description": "A plugin to add blueprint nodes for a better logging",
 	"Category": "Blueprint",
 	"CreatedBy": "Federico Santamorena",
 	"CreatedByURL": "https://santamorena.me/",
-	"DocsURL": "https://github.com/Yatima1460/UE4-Logger",
-	"MarketplaceURL": "https://github.com/Yatima1460/UE4-Logger",
-	"SupportURL": "https://github.com/Yatima1460/UE4-Logger",
+	"DocsURL": "https://github.com/Yatima1460/UE4Logger",
+	"MarketplaceURL": "https://github.com/Yatima1460/UE4Logger",
+	"SupportURL": "https://github.com/Yatima1460/UE4Logger",
 	"CanContainContent": false,
 	"IsBetaVersion": false,
 	"Installed": false,
@@ -18,8 +18,7 @@
 			"Name": "UE4Logger",
 			"Type": "Runtime",
 			"LoadingPhase": "PreLoadingScreen",
-			"WhitelistPlatforms" :
-			[
+			"WhitelistPlatforms": [
 				"Win64",
 				"Win32",
 				"Linux",

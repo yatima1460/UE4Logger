@@ -1,4 +1,4 @@
-// Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
+// Copyright 2017-2018 Federico Santamorena, Inc. All Rights Reserved.
 
 #include "UE4LoggerBPLibrary.h"
 #include "UE4Logger.h"
@@ -106,7 +106,7 @@ void UUE4LoggerBPLibrary::Log(UObject* WorldContextObject, FString InString, ELo
 
 	if (bPrintToLog)
 	{
-		//can't find a better way of doing this without using a switch because of a strange compiler error
+		//TODO: better way of doing this?
 		switch (eLogLevel)
 		{
 		case ELogLevel::Warning:
@@ -130,7 +130,6 @@ void UUE4LoggerBPLibrary::Log(UObject* WorldContextObject, FString InString, ELo
 			LocalPlayer->ViewportClient->ViewportConsole->OutputText(FinalDisplayString);
 		}
 	}
-
 
 	// Also output to the screen if possible and hide suppressed log levels
 	if (bPrintToScreen && !LogBlueprintUserMessages.IsSuppressed((ELogVerbosity::Type)eLogLevel))

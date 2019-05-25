@@ -1,11 +1,11 @@
-// Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
+// Copyright 2017-2019 Federico Santamorena, Inc. All Rights Reserved.
 
 #pragma once
 
-#include "Engine.h"
-#include "Engine/Console.h"
-#include "Engine/LocalPlayer.h"
-#include "Runtime/Core/Public/Logging/LogVerbosity.h"
+#include <Engine.h>
+#include <Engine/Console.h>
+#include <Engine/LocalPlayer.h>
+#include <Runtime/Core/Public/Logging/LogVerbosity.h>
 #include <LogMacros.h>
 #include "UE4LoggerBPLibrary.generated.h"
 

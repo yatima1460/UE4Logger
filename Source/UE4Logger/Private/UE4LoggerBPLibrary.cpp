@@ -1,12 +1,9 @@
-// Copyright 2017-2018 Federico Santamorena, Inc. All Rights Reserved.
+// Copyright 2017-2019 Federico Santamorena, Inc. All Rights Reserved.
 
 #include "UE4LoggerBPLibrary.h"
 #include "UE4Logger.h"
 
-UUE4LoggerBPLibrary::UUE4LoggerBPLibrary(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
-{
-
-}
+UUE4LoggerBPLibrary::UUE4LoggerBPLibrary(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {}
 
 #pragma region verbosity
 void UUE4LoggerBPLibrary::SetLogLevel(UObject * WorldContextObject, ELogLevel eLogLevel)
@@ -106,7 +103,7 @@ void UUE4LoggerBPLibrary::Log(UObject* WorldContextObject, FString InString, ELo
 
 	if (bPrintToLog)
 	{
-		//TODO: better way of doing this?
+
 		switch (eLogLevel)
 		{
 		case ELogLevel::Warning:
